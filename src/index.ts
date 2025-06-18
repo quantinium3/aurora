@@ -1,7 +1,16 @@
-import { Elysia } from "elysia";
+import {Elysia} from "elysia";
+import {stats} from "./stats";
+import {users} from "./user";
+import cors from "@elysiajs/cors";
+import swagger from "@elysiajs/swagger";
 
-const app = new Elysia().get("/", () => "Hello Elysia").listen(3000);
+new Elysia()
+    .use(cors())
+    .use(swagger())
+    .get('/healthz', 'server is running')
+    .get('/ping', 'pinging server')
+    .use(stats)
+    .use(users)
+    .listen(3000)
 
-console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
-);
+console.log('server running at https://localhost:3000')
