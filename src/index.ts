@@ -3,12 +3,17 @@ import {stats} from "./stats";
 import {users} from "./user";
 import cors from "@elysiajs/cors";
 import swagger from "@elysiajs/swagger";
+import {pingServer} from "./ping";
 
 new Elysia()
     .use(cors())
     .use(swagger())
-    .get('/healthz', 'server is running')
-    .get('/ping', 'pinging server')
+    .get('/api/healthz', ({status}) => {
+        return status(200, {
+            health: "ok"
+        })
+    })
+    .use(pingServer)
     .use(stats)
     .use(users)
     .listen(3000)
