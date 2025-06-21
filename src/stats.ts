@@ -2,9 +2,9 @@ import {Elysia, t} from "elysia";
 import 'dotenv/config';
 import {eq, sql} from 'drizzle-orm'
 import {drizzle} from 'drizzle-orm/node-postgres';
-import {statTable} from "./db/scheme";
+import {statTable, userTable} from "./db/scheme";
 
-const db = drizzle(process.env.DATABASE_URL!)
+export const db = drizzle(process.env.DATABASE_URL!)
 
 export const stats = new Elysia({prefix: "/api/stats"})
     .put('/keyboard/:id', async ({params, body, status}) => {
@@ -39,7 +39,7 @@ export const stats = new Elysia({prefix: "/api/stats"})
     })
     .get('/:id', async ({params, status}) => {
         try {
-            let stats = await db.selectDistinct().from(statTable).where(eq(statTable.id, params.id))
+            let stats = await db.selectDistinct().from(statTable).where(eq(statTable.user_id, params.id))
             return status(200, {
                 stats: stats,
                 message: 'successfully fetched stats'
