@@ -3,7 +3,8 @@ import {stats} from "./stats";
 import {users} from "./user";
 import cors from "@elysiajs/cors";
 import swagger from "@elysiajs/swagger";
-import {pingServer} from "./ping";
+import { pingServer } from "./ping";
+import {lastfm} from "./lastfm";
 
 new Elysia()
     .use(cors())
@@ -13,6 +14,7 @@ new Elysia()
             health: "ok"
         })
     })
+    .use(lastfm)
     .use(pingServer)
     .use(stats)
     .use(users)
