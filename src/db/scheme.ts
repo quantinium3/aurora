@@ -22,7 +22,7 @@ export const userTable = pgTable('user', {
 
 export const statTable = pgTable('stats', {
     id: varchar('id').$defaultFn(() => createNamespacedId('stats')).primaryKey(),
-    user_id: varchar('user_id').notNull().unique().references(() => user.id),
+    user_id: varchar('user_id').notNull().unique().references(() => userTable.id, {onDelete: "cascade", onUpdate: "restrict"}),
     keypress: bigint({mode: "number"}).notNull().default(0),
     mouse_travel: doublePrecision('mouse_travel').notNull().default(0.0),
     left_click: doublePrecision('left_click').notNull().default(0.0),
