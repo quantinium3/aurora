@@ -15,6 +15,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Replace image tag with commit SHA
+        run: |
+          sed -i "s|:latest|:sha-${{ github.event.workflow_run.head_sha }}|" docker-compose.yml
+
       - name: copy docker-compose.yml to vps
         uses: appleboy/scp-action@v1
         with:
