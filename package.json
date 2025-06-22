@@ -17,8 +17,7 @@
     "drizzle-orm": "^0.44.2",
     "drizzle-typebox": "^0.3.3",
     "elysia": "latest",
-    "pg": "^8.16.2",
-    "ping": "^0.4.4"
+    "pg": "^8.16.2"
   },
   "overrides": {
     "@sinclair/typebox": "0.34.33"
