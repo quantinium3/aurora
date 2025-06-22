@@ -19,13 +19,22 @@ jobs:
         run: |
           sed -i "s|:latest|:sha-${{ github.event.workflow_run.head_sha }}|" docker-compose.yml
 
+      - name: create env
+        run: |
+          cat <<EOF > .env
+          DATABASE_URL=${{secrets.DATABASE_URL}}
+          LASTFM_API=${{secrets.LASTFM_API}}
+          LASTFM_URI=${{secrets.LASTFM_URI}}
+          LASTFM_USERNAME=${{secrets.LASTFM_USERNAME}}
+          EOF
+
       - name: copy docker-compose.yml to vps
         uses: appleboy/scp-action@v1
         with:
           host: ${{secrets.SERVER_HOST}}
           username: ${{secrets.SERVER_USERNAME}}
           key: ${{secrets.SSH_PRIVATE_KEY}}
-          source: "docker-compose.yml"
+          source: "docker-compose.yml,.env"
           target: "/home/natsuki/aurora"
 
       - name: Deploy to VPS

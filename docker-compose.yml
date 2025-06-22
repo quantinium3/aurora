@@ -1,7 +1,9 @@
 services:
   aurora:
-    image: 'ghcr.io/quantinium3/aurora:latest'
+    image: 'ghcr.io/quantinium3/aurora'
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
       DB_POSTGRES_HOST: "postgres"
       DB_POSTGRES_PORT: "5432"
