@@ -35,8 +35,8 @@ export const pingServer = new Elysia({ prefix: "/api/ping" })
         }
     }, {
         body: t.Object({
-            hostname: t.String(),
-            port: t.Number(),
-            timeout: t.Number()
+            hostname: t.String().default("google.com"),
+            port: t.Number().default("80"),
+            timeout: t.Number().default("1000")
         })
     })
