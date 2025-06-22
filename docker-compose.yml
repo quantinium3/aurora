@@ -1,0 +1,16 @@
+services:
+  aurora:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      DB_POSTGRES_HOST: "postgres"
+      DB_POSTGRES_PORT: "5432"
+      DB_POSTGRES_USER: "postgres"
+      DB_POSTGRES_PASSWORD_FILE: /run/secrets/postgres_pwd
+      DB_POSTGRES_NAME: "aurora"
+    ports:
+      - 3000:3000
+    networks:
+      - alice

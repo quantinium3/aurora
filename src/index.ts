@@ -8,9 +8,11 @@ import {lastfm} from "./lastfm";
 import { opentelemetry } from '@elysiajs/opentelemetry'
 import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-node'
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto'
+import { instrumentation } from "./instrumentation";
 
 
 new Elysia()
+    .use(instrumentation)
     opentelemetry({
         spanProcessors: [new BatchSpanProcessor(new OTLPTraceExporter({
             url: 'http://localhost:4318/v1/traces',
