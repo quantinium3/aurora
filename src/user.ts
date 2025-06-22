@@ -2,7 +2,6 @@ import { Elysia, t } from "elysia";
 import { db } from "./stats";
 import {statTable, userTable} from "./db/scheme";
 import { eq } from "drizzle-orm";
-import bcrypt from "bcrypt";
 
 export const users = new Elysia({ prefix: '/api/user' })
     .get('/:id', async ({ params, status }) => {
@@ -34,7 +33,10 @@ export const users = new Elysia({ prefix: '/api/user' })
             const user = await db.insert(userTable).values({
                 name: body.name,
                 email: body.email,
-                password: await bcrypt.hash(body.password, 12)
+                password: await Bun.password.hash(body.password, {
+                    algorithm: "bcrypt",
+                    cost: 12
+                })
             }).returning();
 
             await db.insert(statTable).values({

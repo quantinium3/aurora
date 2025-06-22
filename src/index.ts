@@ -29,6 +29,6 @@ new Elysia()
     .use(pingServer)
     .use(stats)
     .use(users)
-    .listen(3000)
+    .listen(4000)
 
-console.log('server running at https://localhost:3000')
+console.log('server running at https://localhost:4000')
