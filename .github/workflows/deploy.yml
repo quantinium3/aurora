@@ -19,6 +19,14 @@ jobs:
         run: |
           sed -i "s|:latest|:sha-${{ github.event.workflow_run.head_sha }}|" docker-compose.yml
 
+      - name: set up bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: install dependencies
+        run: bun install
+
       - name: create env
         run: |
           cat <<EOF > .env
@@ -27,6 +35,9 @@ jobs:
           LASTFM_URI=${{secrets.LASTFM_URI}}
           LASTFM_USERNAME=${{secrets.LASTFM_USERNAME}}
           EOF
+
+      - name: push drizzle schema to database
+        run: bunx drizzle-kit push
 
       - name: copy docker-compose.yml to vps
         uses: appleboy/scp-action@v1
