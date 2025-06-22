@@ -1,0 +1,12 @@
+FROM node:lts-alpine
+WORKDIR /app
+
+RUN apk add --no-cache libpq
+
+COPY package.json package.json
+RUN npm install
+
+COPY ./drizzle ./drizzle
+COPY ./drizzle.config.ts ./
+
+CMD ["npx", "drizzle-kit", "push"]

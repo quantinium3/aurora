@@ -14,6 +14,16 @@ services:
       - 4000:4000
     networks:
       - alice
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  migrate:
+    image: 'ghcr.io/quantinium3/drizzle-migrate'
+    env_file:
+      - .env
+    networks:
+      - alice
 
 networks:
   alice:
