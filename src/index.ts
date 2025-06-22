@@ -5,8 +5,17 @@ import cors from "@elysiajs/cors";
 import swagger from "@elysiajs/swagger";
 import { pingServer } from "./ping";
 import {lastfm} from "./lastfm";
+import { opentelemetry } from '@elysiajs/opentelemetry'
+import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-node'
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto'
+
 
 new Elysia()
+    opentelemetry({
+        spanProcessors: [new BatchSpanProcessor(new OTLPTraceExporter({
+            url: 'http://localhost:4318/v1/traces',
+        }))]
+    })
     .use(cors())
     .use(swagger())
     .get('/api/healthz', ({status}) => {
