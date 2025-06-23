@@ -8,10 +8,25 @@ services:
       DB_POSTGRES_HOST: "postgres"
       DB_POSTGRES_PORT: "5432"
       DB_POSTGRES_USER: "postgres"
-      DB_POSTGRES_PASSWORD_FILE: /run/secrets/postgres_pwd
+      DB_POSTGRES_PASSWORD: ${DB_PASSWORD}
       DB_POSTGRES_NAME: "aurora"
     ports:
       - 4000:4000
+    networks:
+      - alice
+    depends:
+      - db
+
+  db:
+    image: 'postgres:latest'
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: 'aurora'
+    volumes:
+      - ./postgres:/var/lib/postgresql/aurora/data
     networks:
       - alice
 
