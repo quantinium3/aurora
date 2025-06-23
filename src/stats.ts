@@ -1,10 +1,9 @@
 import {Elysia, t} from "elysia";
 import 'dotenv/config';
 import {eq, sql} from 'drizzle-orm'
-import {drizzle} from 'drizzle-orm/node-postgres';
 import {statTable, userTable} from "./db/scheme";
+import { db } from ".";
 
-export const db = drizzle(process.env.DATABASE_URL!)
 
 export const stats = new Elysia({prefix: "/api/stats"})
     .put('/keyboard/:id', async ({params, body, status}) => {

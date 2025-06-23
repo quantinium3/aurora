@@ -40,3 +40,4 @@ export const pingServer = new Elysia({ prefix: "/api/ping" })
             timeout: t.Number()
         })
     })
+

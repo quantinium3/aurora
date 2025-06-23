@@ -9,7 +9,10 @@ import { opentelemetry } from '@elysiajs/opentelemetry'
 import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-node'
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto'
 import { instrumentation } from "./instrumentation";
+import { drizzle } from "drizzle-orm/node-postgres";
 
+console.log(process.env.DATABASE_URL!)
+export const db = drizzle(process.env.DATABASE_URL!)
 
 new Elysia()
     .use(instrumentation)

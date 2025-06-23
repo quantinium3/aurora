@@ -1,7 +1,7 @@
 import { Elysia, t } from "elysia";
-import { db } from "./stats";
 import {statTable, userTable} from "./db/scheme";
 import { eq } from "drizzle-orm";
+import { db } from ".";
 
 export const users = new Elysia({ prefix: '/api/user' })
     .get('/:id', async ({ params, status }) => {
